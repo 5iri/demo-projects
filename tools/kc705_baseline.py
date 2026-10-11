@@ -7,6 +7,7 @@ Reported build timing and observed memory-test results are separate evidence.
 """
 
 import argparse
+from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
@@ -47,9 +48,12 @@ def main():
         parser.error("expected XC7K325T was not detected; see detect.log")
 
     started = time.monotonic()
+    started_utc = datetime.now(timezone.utc).isoformat()
     data = bytearray()
     events = []
+    process = None
     result = dict(bitstream=str(bit), bitstream_sha256=digest,
+                  started_utc=started_utc,
                   programming="volatile FPGA configuration SRAM",
                   uart=args.uart, jtag_serial=args.jtag_serial,
                   full_memory_test_requested=args.full_memory_test,
@@ -138,6 +142,16 @@ def main():
     except Exception as exc:
         result["failure"] = f"{type(exc).__name__}: {exc}"
     finally:
+        if process is not None and process.poll() is None:
+            process.terminate()
+            try:
+                process.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                process.kill()
+                process.wait()
+        if process is not None:
+            result["program_exit"] = process.returncode
+        result["finished_utc"] = datetime.now(timezone.utc).isoformat()
         result["elapsed_seconds"] = round(time.monotonic()-started, 3)
         result["uart_bytes"] = len(data)
         (args.out / "uart.bin").write_bytes(data)

@@ -1,0 +1,188 @@
+Excerpt from upstream CI run 37399939228, original build.log lines 39393-39578.
+
+Info: Critical path report for clock 'main_crg_clkout_buf0' (posedge -> posedge):
+Info:       type curr  total name
+Info:   clk-to-q  0.35  0.35 Source $auto$ff.cc:337:slice$33059.Q
+Info:    routing  0.33  0.68 Net main_basesoc_sdram_zqcs_timer_count0[0] (197,277) -> (197,275)
+Info:                          Sink main_basesoc_sdram_zqcs_timer_count0[0]$LUT$$auto$alumacc.cc:512:replace_alu$24580.genblk1.slice[0].genblk1.carry4$split$muxcy0$PACKED_CARRY4$$S[0].A1
+Info:                          Defined in:
+Info:                               xilinx_kc705.v:1870.15-1870.51
+Info:      logic  0.12  0.80 Source main_basesoc_sdram_zqcs_timer_count0[0]$LUT$$auto$alumacc.cc:512:replace_alu$24580.genblk1.slice[0].genblk1.carry4$split$muxcy0$PACKED_CARRY4$$S[0].O6
+Info:    routing  0.00  0.80 Net main_basesoc_sdram_zqcs_timer_count0[0]$legal$$auto$alumacc.cc:512:replace_alu$24580.genblk1.slice[0].genblk1.carry4$split$muxcy0$PACKED_CARRY4$$S[0] (197,275) -> (197,275)
+Info:                          Sink $auto$alumacc.cc:512:replace_alu$24580.genblk1.slice[0].genblk1.carry4$split$muxcy0$PACKED_CARRY4$.S0
+Info:      logic  0.52  1.32 Source $auto$alumacc.cc:512:replace_alu$24580.genblk1.slice[0].genblk1.carry4$split$muxcy0$PACKED_CARRY4$.O2
+Info:    routing  0.23  1.55 Net $techmap365597$abc$362843$lut$aiger362842$15583.A[3] (197,275) -> (197,275)
+Info:                          Sink $abc$362843$lut$aiger362842$15583.A4
+Info:                          Defined in:
+Info:                               /nix/store/8xp00x56zj0nxqk3h334176g2d25jmvd-yosys-0.67/bin/../share/yosys/xilinx/lut_map.v:30.21-30.22
+Info:      logic  0.12  1.67 Source $abc$362843$lut$aiger362842$15583.O6
+Info:    routing  0.34  2.02 Net $techmap365600$abc$362843$lut$aiger362842$15599.A[4] (197,275) -> (197,277)
+Info:                          Sink $abc$362843$lut$aiger362842$15599.A5
+Info:                          Defined in:
+Info:                               /nix/store/8xp00x56zj0nxqk3h334176g2d25jmvd-yosys-0.67/bin/../share/yosys/xilinx/lut_map.v:30.21-30.22
+Info:      logic  0.12  2.14 Source $abc$362843$lut$aiger362842$15599.O6
+Info:    routing  1.29  3.43 Net $techmap365612$auto$abc_ops_reintegrate.cc:450:reintegrate$364664.A[5] (197,277) -> (199,346)
+Info:                          Sink $abc$362843$lut$aiger362842$15675.A5
+Info:                          Defined in:
+Info:                               /nix/store/8xp00x56zj0nxqk3h334176g2d25jmvd-yosys-0.67/bin/../share/yosys/xilinx/lut_map.v:30.21-30.22
+Info:      logic  0.15  3.58 Source $abc$362843$lut$aiger362842$15675.O5
+Info:    routing  0.15  3.73 Net $techmap365734$abc$362843$lut$aiger362842$15733.A[2] (199,346) -> (199,346)
+Info:                          Sink $abc$362843$lut$aiger362842$15733.A2
+Info:                          Defined in:
+Info:                               /nix/store/8xp00x56zj0nxqk3h334176g2d25jmvd-yosys-0.67/bin/../share/yosys/xilinx/lut_map.v:30.21-30.22
+Info:      logic  0.15  3.88 Source $abc$362843$lut$aiger362842$15733.O5
+Info:    routing  1.02  4.90 Net $techmap365735$abc$362843$lut$aiger362842$15743.A[0] (199,346) -> (199,300)
+Info:                          Sink $abc$362843$lut$aiger362842$15743.A1
+Info:                          Defined in:
+Info:                               /nix/store/8xp00x56zj0nxqk3h334176g2d25jmvd-yosys-0.67/bin/../share/yosys/xilinx/lut_map.v:30.21-30.22
+Info:      logic  0.12  5.03 Source $abc$362843$lut$aiger362842$15743.O6
+Info:    routing  0.15  5.18 Net $techmap365737$abc$362843$lut$aiger362842$15746.A[2] (199,300) -> (199,300)
+Info:                          Sink $abc$362843$lut$aiger362842$15746.A3
+Info:                          Defined in:
+Info:                               /nix/store/8xp00x56zj0nxqk3h334176g2d25jmvd-yosys-0.67/bin/../share/yosys/xilinx/lut_map.v:30.21-30.22
+Info:      logic  0.15  5.33 Source $abc$362843$lut$aiger362842$15746.O5
+Info:    routing  0.25  5.58 Net $techmap365772$abc$362843$lut$aiger362842$15916.A[5] (199,300) -> (199,300)
+Info:                          Sink $abc$362843$lut$aiger362842$15916.A6
+Info:                          Defined in:
+Info:                               /nix/store/8xp00x56zj0nxqk3h334176g2d25jmvd-yosys-0.67/bin/../share/yosys/xilinx/lut_map.v:30.21-30.22
+Info:      logic  0.12  5.70 Source $abc$362843$lut$aiger362842$15916.O6
+Info:    routing  0.24  5.94 Net $techmap365773$abc$362843$lut$aiger362842$15921.A[3] (199,300) -> (199,302)
+Info:                          Sink $abc$362843$lut$aiger362842$18848.A2
+Info:                          Defined in:
+Info:                               /nix/store/8xp00x56zj0nxqk3h334176g2d25jmvd-yosys-0.67/bin/../share/yosys/xilinx/lut_map.v:30.21-30.22
+Info:      logic  0.15  6.09 Source $abc$362843$lut$aiger362842$18848.O5
+Info:    routing  0.77  6.86 Net $techmap366868$auto$abc_ops_reintegrate.cc:450:reintegrate$364235.A[2] (199,302) -> (199,330)
+Info:                          Sink $auto$abc_ops_reintegrate.cc:450:reintegrate$364469.A2
+Info:                          Defined in:
+Info:                               /nix/store/8xp00x56zj0nxqk3h334176g2d25jmvd-yosys-0.67/bin/../share/yosys/xilinx/lut_map.v:30.21-30.22
+Info:      logic  0.12  6.99 Source $auto$abc_ops_reintegrate.cc:450:reintegrate$364469.O6
+Info:    routing  0.76  7.74 Net main_basesoc_sdram_bankmachine6_pipe_valid_sink_ready (199,330) -> (199,314)
+Info:                          Sink $auto$abc_ops_reintegrate.cc:450:reintegrate$364289.A5
+Info:                          Defined in:
+Info:                               xilinx_kc705.v:2502.15-2502.59
+Info:      logic  0.12  7.87 Source $auto$abc_ops_reintegrate.cc:450:reintegrate$364289.O6
+Info:    routing  0.36  8.23 Net $abc$362843$auto$opt_dff.cc:336:make_patterns_logic$22640 (199,314) -> (199,314)
+Info:                          Sink $auto$ff.cc:337:slice$30467.CE
+Info:      setup  0.10  8.33 Source $auto$ff.cc:337:slice$30467.CE
+Info: 2.44 ns logic, 5.89 ns routing
+
+Info: Critical path report for cross-domain path 'posedge main_crg_clkout_buf0' -> 'posedge main_crg_clkin':
+Info:       type curr  total name
+Info:   clk-to-q  0.35  0.35 Source $auto$ff.cc:337:slice$30206.Q
+Info:    routing  0.95  1.30 Net builder_csr_bankarray_csrbank0_reset0_w[0] (207,251) -> (207,216)
+Info:                          Sink $auto$abc_ops_reintegrate.cc:450:reintegrate$364348.A2
+Info:                          Defined in:
+Info:                               xilinx_kc705.v:83.15-83.41
+Info:      logic  0.15  1.45 Source $auto$abc_ops_reintegrate.cc:450:reintegrate$364348.O5
+Info:    routing  0.02  1.47 Net main_crg_reset (207,216) -> (207,216)
+Info:                          Sink FDCE.D
+Info:                          Defined in:
+Info:                               xilinx_kc705.v:68.15-68.29
+Info:      setup  0.10  1.57 Source FDCE.D
+Info: 0.60 ns logic, 0.97 ns routing
+
+Info: 14 Hold/min time violations (showing 10 worst paths):
+
+Warning: Hold/min time violation for clock 'posedge main_crg_clkout_buf0':
+Info:       type curr  total name
+Info:   clk-to-q  0.30  0.30 Source $auto$ff.cc:337:slice$30024.Q
+Info:    routing  0.20  0.50 Net VexRiscv.dataCache_1_io_mem_cmd_payload_address[20] (197,213) -> (193,213)
+Info:                          Sink VexRiscv.dataCache_1.ways_0_tags.0.0.DIADI9
+Info:                          Defined in:
+Info:                               ../vexriscv/VexRiscv.v:135.23-135.61
+Info:       hold -0.67 -0.16 Source VexRiscv.dataCache_1.ways_0_tags.0.0.DIADI9
+Info: -0.37 ns logic, 0.20 ns routing
+
+Warning: Hold/min time violation for clock 'posedge main_crg_clkout_buf0':
+Info:       type curr  total name
+Info:   clk-to-q  0.30  0.30 Source $auto$ff.cc:337:slice$30017.Q
+Info:    routing  0.22  0.52 Net VexRiscv.dataCache_1_io_mem_cmd_payload_address[13] (199,213) -> (193,213)
+Info:                          Sink VexRiscv.dataCache_1.ways_0_tags.0.0.DIADI3
+Info:                          Defined in:
+Info:                               ../vexriscv/VexRiscv.v:135.23-135.61
+Info:       hold -0.67 -0.15 Source VexRiscv.dataCache_1.ways_0_tags.0.0.DIADI3
+Info: -0.37 ns logic, 0.22 ns routing
+
+Warning: Hold/min time violation for clock 'posedge main_crg_clkout_buf0':
+Info:       type curr  total name
+Info:   clk-to-q  0.30  0.30 Source $auto$ff.cc:337:slice$29443.Q
+Info:    routing  0.23  0.53 Net main_basesoc_ibus_adr[10] (192,258) -> (193,259)
+Info:                          Sink VexRiscv.IBusCachedPlugin_cache.ways_0_tags.0.0.DIADI2
+Info:                          Defined in:
+Info:                               xilinx_kc705.v:94.15-94.36
+Info:       hold -0.67 -0.14 Source VexRiscv.IBusCachedPlugin_cache.ways_0_tags.0.0.DIADI2
+Info: -0.37 ns logic, 0.23 ns routing
+
+Warning: Hold/min time violation for clock 'posedge main_crg_clkout_buf0':
+Info:       type curr  total name
+Info:   clk-to-q  0.30  0.30 Source $auto$ff.cc:337:slice$29446.Q
+Info:    routing  0.24  0.54 Net main_basesoc_ibus_adr[13] (192,258) -> (193,259)
+Info:                          Sink VexRiscv.IBusCachedPlugin_cache.ways_0_tags.0.0.DIADI5
+Info:                          Defined in:
+Info:                               xilinx_kc705.v:94.15-94.36
+Info:       hold -0.67 -0.12 Source VexRiscv.IBusCachedPlugin_cache.ways_0_tags.0.0.DIADI5
+Info: -0.37 ns logic, 0.24 ns routing
+
+Warning: Hold/min time violation for clock 'posedge main_crg_clkout_buf0':
+Info:       type curr  total name
+Info:   clk-to-q  0.30  0.30 Source $auto$ff.cc:337:slice$29447.Q
+Info:    routing  0.25  0.55 Net main_basesoc_ibus_adr[14] (192,257) -> (193,259)
+Info:                          Sink VexRiscv.IBusCachedPlugin_cache.ways_0_tags.0.0.DIADI6
+Info:                          Defined in:
+Info:                               xilinx_kc705.v:94.15-94.36
+Info:       hold -0.67 -0.12 Source VexRiscv.IBusCachedPlugin_cache.ways_0_tags.0.0.DIADI6
+Info: -0.37 ns logic, 0.25 ns routing
+
+Warning: Hold/min time violation for clock 'posedge main_crg_clkout_buf0':
+Info:       type curr  total name
+Info:   clk-to-q  0.30  0.30 Source $auto$ff.cc:337:slice$30032.Q
+Info:    routing  0.31  0.61 Net VexRiscv.dataCache_1_io_mem_cmd_payload_address[28] (197,213) -> (193,213)
+Info:                          Sink VexRiscv.dataCache_1.ways_0_tags.0.0.DIBDI0
+Info:                          Defined in:
+Info:                               ../vexriscv/VexRiscv.v:135.23-135.61
+Info:       hold -0.67 -0.06 Source VexRiscv.dataCache_1.ways_0_tags.0.0.DIBDI0
+Info: -0.37 ns logic, 0.31 ns routing
+
+Warning: Hold/min time violation for clock 'posedge main_crg_clkout_buf0':
+Info:       type curr  total name
+Info:   clk-to-q  0.30  0.30 Source $auto$ff.cc:337:slice$30034.Q
+Info:    routing  0.31  0.61 Net VexRiscv.dataCache_1_io_mem_cmd_payload_address[30] (197,213) -> (193,213)
+Info:                          Sink VexRiscv.dataCache_1.ways_0_tags.0.0.DIBDI2
+Info:                          Defined in:
+Info:                               ../vexriscv/VexRiscv.v:135.23-135.61
+Info:       hold -0.67 -0.05 Source VexRiscv.dataCache_1.ways_0_tags.0.0.DIBDI2
+Info: -0.37 ns logic, 0.31 ns routing
+
+Warning: Hold/min time violation for clock 'posedge main_crg_clkout_buf0':
+Info:       type curr  total name
+Info:   clk-to-q  0.30  0.30 Source $auto$ff.cc:337:slice$30019.Q
+Info:    routing  0.32  0.62 Net VexRiscv.dataCache_1_io_mem_cmd_payload_address[15] (197,214) -> (193,213)
+Info:                          Sink VexRiscv.dataCache_1.ways_0_tags.0.0.DIADI5
+Info:                          Defined in:
+Info:                               ../vexriscv/VexRiscv.v:135.23-135.61
+Info:       hold -0.67 -0.05 Source VexRiscv.dataCache_1.ways_0_tags.0.0.DIADI5
+Info: -0.37 ns logic, 0.32 ns routing
+
+Warning: Hold/min time violation for clock 'posedge main_crg_clkout_buf0':
+Info:       type curr  total name
+Info:   clk-to-q  0.30  0.30 Source $auto$ff.cc:337:slice$29444.Q
+Info:    routing  0.32  0.62 Net main_basesoc_ibus_adr[11] (192,258) -> (193,259)
+Info:                          Sink VexRiscv.IBusCachedPlugin_cache.ways_0_tags.0.0.DIADI3
+Info:                          Defined in:
+Info:                               xilinx_kc705.v:94.15-94.36
+Info:       hold -0.67 -0.05 Source VexRiscv.IBusCachedPlugin_cache.ways_0_tags.0.0.DIADI3
+Info: -0.37 ns logic, 0.32 ns routing
+
+Warning: Hold/min time violation for clock 'posedge main_crg_clkout_buf0':
+Info:       type curr  total name
+Info:   clk-to-q  0.30  0.30 Source $auto$ff.cc:337:slice$29454.Q
+Info:    routing  0.32  0.62 Net main_basesoc_ibus_adr[21] (192,258) -> (193,259)
+Info:                          Sink VexRiscv.IBusCachedPlugin_cache.ways_0_tags.0.0.DIADI12
+Info:                          Defined in:
+Info:                               xilinx_kc705.v:94.15-94.36
+Info:       hold -0.67 -0.05 Source VexRiscv.IBusCachedPlugin_cache.ways_0_tags.0.0.DIADI12
+Info: -0.37 ns logic, 0.32 ns routing
+
+Info: Max frequency for clock           'idelay_clk': 493.83 MHz (PASS at 200.00 MHz)
+Info: Max frequency for clock       'main_crg_clkin': 1030.93 MHz (PASS at 200.00 MHz)
+Warning: Max frequency for clock 'main_crg_clkout_buf0': 120.02 MHz (FAIL at 125.00 MHz)
