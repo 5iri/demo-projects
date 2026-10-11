@@ -27,7 +27,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v14
-      - uses: DeterminateSystems/magic-nix-cache-action@v6
       - name: Build with the upstream toolchain pin
         shell: bash
         run: |
@@ -37,7 +36,7 @@ jobs:
           nix develop "github:openXC7/toolchain-nix/${TOOLCHAIN_NIX_REV}" \
             --command bash -euxo pipefail <<'EOF' 2>&1 | tee build/kc705/build.log
             yosys -V
-            nextpnr-xilinx --version
+            nextpnr-himbaechel --version
             export KINTEX7_CHIPDB="$PWD/chipdb"
             # The normal Makefile generates just the XC7K325T database.
             # Retain upstream PNR_ARGS, including its known timing failure.
