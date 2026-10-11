@@ -1,0 +1,59 @@
+name: KC705 baseline
+
+on:
+  push:
+    branches: [kc705-upstream-baseline]
+    paths:
+      - '.github/workflows/kc705-baseline.yml'
+      - 'litex-ddr-kc705/**'
+      - 'vexriscv/VexRiscv.v'
+      - 'openXC7.mk'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kc705-baseline-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  TOOLCHAIN_NIX_REV: 42323cb00c8b76486619695166498dfa72b1e3e2
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/magic-nix-cache-action@v6
+      - name: Build with the upstream toolchain pin
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/kc705 chipdb
+          git rev-parse HEAD > build/kc705/source-commit.txt
+          nix develop "github:openXC7/toolchain-nix/${TOOLCHAIN_NIX_REV}" \
+            --command bash -euxo pipefail <<'EOF' 2>&1 | tee build/kc705/build.log
+            yosys -V
+            nextpnr-xilinx --version
+            export KINTEX7_CHIPDB="$PWD/chipdb"
+            # The normal Makefile generates just the XC7K325T database.
+            # Retain upstream PNR_ARGS, including its known timing failure.
+            make -C litex-ddr-kc705
+            python3 .github/scripts/normbit.py litex-ddr-kc705/xilinx_kc705.bit \
+              > build/kc705/normalized-bitstream-sha256.txt
+            sha256sum litex-ddr-kc705/xilinx_kc705.{v,xdc,bit,fasm,json} \
+              litex-ddr-kc705/*.init vexriscv/VexRiscv.v \
+              > build/kc705/SHA256SUMS
+            cp litex-ddr-kc705/xilinx_kc705.{bit,fasm,json} build/kc705/
+          EOF
+      - name: Preserve build evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kc705-baseline-${{ github.sha }}
+          path: build/kc705/
+          if-no-files-found: error
+          retention-days: 30
