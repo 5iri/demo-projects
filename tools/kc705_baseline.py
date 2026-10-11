@@ -28,7 +28,8 @@ def main():
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--uart", default="/dev/cu.usbserial-0001")
     parser.add_argument("--jtag-serial", default="210203A3CFBC")
-    parser.add_argument("--timeout", type=float, default=180)
+    parser.add_argument("--timeout", type=float, default=600)
+    parser.add_argument("--idle-timeout", type=float, default=30)
     parser.add_argument("--full-memory-test", action="store_true")
     args = parser.parse_args()
     bit = args.bit.resolve()
@@ -65,10 +66,12 @@ def main():
                 process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT)
                 escaped = False
                 full_start = None
+                last_output = time.monotonic()
                 deadline = time.monotonic() + args.timeout
                 while time.monotonic() < deadline:
                     chunk = uart.read(4096)
                     if chunk:
+                        last_output = time.monotonic()
                         events.append(dict(seconds=round(time.monotonic()-started, 3),
                                            offset=len(data), size=len(chunk)))
                         data.extend(chunk)
@@ -83,6 +86,10 @@ def main():
                         process.terminate()
                         process.wait(timeout=10)
                         result["failure"] = "programming timed out"
+                        break
+
+                    if full_start is not None and time.monotonic() - last_output > args.idle_timeout:
+                        result["failure"] = "full-memory test UART stalled"
                         break
 
                     # Ignore output from the old FPGA image before this BIOS starts.
@@ -126,6 +133,8 @@ def main():
                     process.terminate()
                     process.wait(timeout=10)
                 result["program_exit"] = process.returncode
+    except KeyboardInterrupt:
+        result["failure"] = "capture interrupted"
     except Exception as exc:
         result["failure"] = f"{type(exc).__name__}: {exc}"
     finally:

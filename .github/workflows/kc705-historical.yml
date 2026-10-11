@@ -1,0 +1,65 @@
+name: KC705 historical toolchain
+
+on:
+  push:
+    branches: [kc705-upstream-baseline]
+    paths: ['.github/workflows/kc705-historical.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: f1b7ea43243036421bfe842dc2741d02e60c0fda
+      - name: Install the releases recommended before the June 2023 contribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence downloads chipdb
+          curl -fL --retry 3 -o downloads/openxc7.snap \
+            https://github.com/openXC7/openXC7-snap/releases/download/v0.4.0/openxc7_0.4.0_amd64.snap
+          curl -fL --retry 3 -o downloads/yosys.snap \
+            https://github.com/openXC7/yosys-snap/releases/download/v0.17/yosys_0.17_amd64.snap
+          sha256sum downloads/*.snap > evidence/toolchain-SHA256SUMS
+          sudo snap install --dangerous --classic downloads/openxc7.snap
+          sudo snap install --dangerous --classic downloads/yosys.snap
+          for app in nextpnr-xilinx bbasm fasm2frames xc7frames2bit; do
+            sudo snap alias "openxc7.$app" "$app"
+          done
+          snap list > evidence/snap-list.txt
+          git rev-parse HEAD > evidence/source-commit.txt
+      - name: Build unchanged original KC705 design
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PATH="/snap/bin:$PATH"
+          {
+            yosys -V
+            nextpnr-xilinx --version
+            # Use the Python bundled with this release for its own generator.
+            export PYTHONPATH=/snap/openxc7/current/lib/python3.8/site-packages:/snap/openxc7/current/usr/lib/python3/dist-packages
+            export LD_LIBRARY_PATH=/snap/openxc7/current/usr/lib/x86_64-linux-gnu
+            /snap/openxc7/current/usr/bin/python3.8 \
+              /snap/openxc7/current/opt/nextpnr-xilinx/python/bbaexport.py \
+              --device xc7k325tffg900-2 --bba chipdb/kc705.bba
+            bbasm -l chipdb/kc705.bba chipdb/xc7k325tffg900-2.bin
+            unset LD_LIBRARY_PATH PYTHONPATH
+            make -C litex-ddr-kc705
+            sha256sum litex-ddr-kc705/xilinx_kc705.{v,xdc,bit,fasm,json} \
+              litex-ddr-kc705/*.init vexriscv/VexRiscv.v > evidence/SHA256SUMS
+            cp litex-ddr-kc705/xilinx_kc705.{bit,fasm,json} evidence/
+          } 2>&1 | tee evidence/build.log
+      - name: Preserve evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kc705-openxc7-0.4.0-yosys-0.17
+          path: evidence/
+          if-no-files-found: error
+          retention-days: 30
